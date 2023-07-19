@@ -1,39 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material'
+import { NavLink } from 'react-router-dom'
+import { getToken } from '../services/LocalStorageService'
 
-export default function Navbar(props) {
+
+export default function Navbar() {
+  const {access_token} = getToken()
   return (
     <>
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <div className="container-fluid">
-            <a className="navbar-brand" href="/">{props.title}</a>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/">{props.aboutText}</a>
-                </li>
-              </ul>
-              <form className="d-flex">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-          </div>
-        </nav>
-      </div>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" color="secondary">
+          <Toolbar>
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+              Geek:Shop
+            </Typography>
+            <Button component={NavLink} to='/' sx={{ color: 'white' , textTransform:'none'}} style= {({isActive})=>{return {backgroundColor: isActive ? 'red' : ''}}}>Home</Button>
+            
+            <Button component={NavLink} to='contact'  style= {({isActive})=>{return {backgroundColor: isActive ? 'red' : ''}}}sx={{ color: 'white' , textTransform:'none'}} >Contact</Button>
+            {access_token?<Button component={NavLink} to='login'  style= {({isActive})=>{return {backgroundColor: isActive ? 'red' : ''}}}sx={{ color: 'white' , textTransform:'none'}} >DashBoard</Button> : <Button component={NavLink} to='login'  style= {({isActive})=>{return {backgroundColor: isActive ? 'red' : ''}}}sx={{ color: 'white' , textTransform:'none'}} >Login/Regestration</Button> }
+
+          </Toolbar>
+        </AppBar>
+      </Box>
     </>
   )
-
-}
-Navbar.propTypes ={
-  title : PropTypes.string,
-  aboutText : PropTypes.string,
 }
